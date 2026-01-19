@@ -288,7 +288,7 @@ export function DashboardUI({ initialData, userId }: DashboardUIProps) {
       const friendsCount = friendsResult.data?.length || 0
       const certificatesCount = certificatesResult.data?.length || 0
       const ageGroup = profileResult.data?.age_group || 'all'
-      const age = profileResult.data?.date_of_birth 
+      const calculatedAge = profileResult.data?.date_of_birth 
         ? calculateAge(new Date(profileResult.data.date_of_birth))
         : null
 
@@ -330,13 +330,14 @@ export function DashboardUI({ initialData, userId }: DashboardUIProps) {
         friendsCount,
         certificatesCount,
         ageGroup,
-        age: age ?? 0  // ← FIXED: Convert null to 0
+        age: calculatedAge ?? 0  // ← FIXED: Use full property syntax
       })
 
       setCourses(coursesResult.data || [])
       setBadges(badgesResult.data?.map((ub: any) => ub.badges) || [])
       setLeaderboard(leaderboardData)
       setUserRank(userRank)
+
       // Set notification states
       setNotifications(notificationsData)
       setUnreadCount(unreadNotifications)
