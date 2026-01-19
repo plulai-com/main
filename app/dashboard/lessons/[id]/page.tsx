@@ -5,7 +5,7 @@ import { notFound } from "next/navigation"
 
 export default async function LessonPage({ params }: { params: { id: string } }) {
   const { user } = await requirePaidUser()
-  const data = await getLessonData(params.id)
+  const data = await getLessonData(params.id, user.id) // ← Added user.id as second argument
 
   if (!data || !data.lesson) {
     notFound()
