@@ -10,16 +10,12 @@ export default async function QuestsPage() {
     redirect("/login")
   }
   
-  const [dashboardData, weeklyProgress] = await Promise.all([
-    getDashboardData(),
-    getUserWeeklyProgress(user.id)
-  ])
+  const weeklyProgress = await getUserWeeklyProgress(user.id)
 
   return (
     <QuestsContent 
-      dashboardData={dashboardData}
-      weeklyProgress={weeklyProgress}
       userId={user.id}
+      weeklyProgress={weeklyProgress}
     />
   )
 }
