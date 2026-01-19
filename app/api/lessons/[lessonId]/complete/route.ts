@@ -4,10 +4,10 @@ import { createClient } from '@/lib/server'
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { lessonId: string } }
+  { params }: { params: Promise<{ lessonId: string }> }  // ← CHANGED: params is a Promise
 ) {
   try {
-    const lessonId = params.lessonId
+    const { lessonId } = await params;  // ← CHANGED: Await the params
     const body = await request.json()
     const { userId } = body
 
