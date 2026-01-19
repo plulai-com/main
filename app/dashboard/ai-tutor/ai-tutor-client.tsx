@@ -1,4 +1,3 @@
-C:\Users\Asus\Downloads\exple\my-app - GPT VER\app\dashboard\ai-tutor\ai-tutor-client.tsx
 "use client"
 
 import { useState, useEffect, useRef } from "react"
