@@ -5,10 +5,10 @@ import { cookies } from 'next/headers'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { courseId: string } }
+  { params }: { params: Promise<{ courseId: string }> }  // ← CHANGED: params is a Promise
 ) {
   try {
-    const courseId = params.courseId
+    const { courseId } = await params;  // ← CHANGED: Await the params
     const { searchParams } = new URL(request.url)
     const userId = searchParams.get('userId')
     
