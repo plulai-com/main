@@ -1,13 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import React, { useState } from "react"
 import { ChevronDown, HelpCircle, MessageSquare, CreditCard, UserCheck, Code, Award } from "lucide-react"
 
 interface FAQItem {
   question: string
   answer: string
   category: string
-  icon: JSX.Element
+  icon: React.ReactNode // Changed from JSX.Element to React.ReactNode
 }
 
 export function FAQ() {
