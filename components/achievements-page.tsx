@@ -73,6 +73,28 @@ interface StreakData {
   }>
 }
 
+interface Stats {
+  earnedBadgesCount: number
+  totalBadges: number
+  completionPercentage: number
+  currentLevel: number
+  currentXP: number
+  currentStreak: number
+  longestStreak: number
+  completedLessons: number
+  completedCourses: number
+  totalLogins: number
+  nextXPMilestone: { badge: string; xp: number }
+  progressToNext: number
+  rarityCounts: {
+    common: number
+    uncommon: number
+    rare: number
+    epic: number
+    legendary: number
+  }
+}
+
 export function AchievementsPage({ initialData, userId }: AchievementsPageProps) {
   const router = useRouter()
   const supabase = createClient()
@@ -86,7 +108,7 @@ export function AchievementsPage({ initialData, userId }: AchievementsPageProps)
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null)
   const [showFilters, setShowFilters] = useState(false)
   const [activeTab, setActiveTab] = useState<'badges' | 'progress' | 'stats'>('badges')
-  const [stats, setStats] = useState(initialData?.stats || {
+  const [stats, setStats] = useState<Stats>(initialData?.stats || {
     earnedBadgesCount: 0,
     totalBadges: 0,
     completionPercentage: 0,
@@ -276,7 +298,7 @@ export function AchievementsPage({ initialData, userId }: AchievementsPageProps)
         
         earnedBadgesList.forEach(badge => {
           if (badge.rarity in rarityCounts) {
-            rarityCounts[badge.rarity]++
+            rarityCounts[badge.rarity as keyof typeof rarityCounts]++
           }
         })
 
@@ -362,8 +384,8 @@ export function AchievementsPage({ initialData, userId }: AchievementsPageProps)
               prev.map(b => b.id === badge.id ? newBadge : b)
             )
             
-            // Update stats
-            setStats(prev => ({
+            // Update stats - FIXED: Added type annotation to prev parameter
+            setStats((prev: Stats) => ({
               ...prev,
               earnedBadgesCount: (prev.earnedBadgesCount || 0) + 1,
               completionPercentage: Math.round(((prev.earnedBadgesCount || 0) + 1) / Math.max(prev.totalBadges || 1, 1) * 100)
@@ -446,7 +468,7 @@ export function AchievementsPage({ initialData, userId }: AchievementsPageProps)
           longestStreak: Math.max(prev.longestStreak, newStreak)
         }))
 
-        setStats(prev => ({
+        setStats((prev: Stats) => ({
           ...prev,
           currentStreak: newStreak,
           longestStreak: Math.max(prev.longestStreak, newStreak),
