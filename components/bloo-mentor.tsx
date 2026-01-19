@@ -77,7 +77,7 @@ export function BlooMentor({
         }
       }
     } catch (err) {
-      console.error("[v0] Failed to get Bloo response:", err)
+      console.error("plulai Failed to get Bloo response:", err)
       setError(true)
       const fallbackMessages = {
         level_up: `Level ${levelReached}! You're unstoppable! 🚀`,

@@ -124,7 +124,7 @@ export async function POST(req: Request) {
 
     if (!response.ok) {
       const error = await response.json()
-      console.error("[v0] OpenRouter API error:", error)
+      console.error("plulai OpenRouter API error:", error)
       return Response.json({ error: "AI Service Unavailable" }, { status: 502 })
     }
 
@@ -133,7 +133,7 @@ export async function POST(req: Request) {
 
     return Response.json({ text })
   } catch (error) {
-    console.error("[v0] Bloo API error:", error)
+    console.error("plulai Bloo API error:", error)
     return Response.json({ error: "Failed to generate response" }, { status: 500 })
   }
 }

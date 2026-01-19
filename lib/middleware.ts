@@ -70,7 +70,7 @@ export async function updateSession(request: NextRequest) {
       .single()
 
     if (profileError || !profile) {
-      console.error("[v0] Profile fetch error:", profileError)
+      console.error("plulai Profile fetch error:", profileError)
       return NextResponse.redirect(new URL("/login", request.url))
     }
 

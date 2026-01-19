@@ -24,13 +24,13 @@ export async function POST(req: Request) {
     })
 
     if (error) {
-      console.error("[v0] Password change error:", error)
+      console.error("plulai Password change error:", error)
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error("[v0] Password change API error:", error)
+    console.error("plulai Password change API error:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

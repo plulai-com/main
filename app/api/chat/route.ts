@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const error = await response.text()
-      console.error("[v0] OpenRouter API error:", error)
+      console.error("plulai OpenRouter API error:", error)
       return NextResponse.json({ error: "Failed to get AI response" }, { status: response.status })
     }
 
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
       conversationId,
     })
   } catch (error) {
-    console.error("[v0] Chat API error:", error)
+    console.error("plulai Chat API error:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

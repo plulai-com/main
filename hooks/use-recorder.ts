@@ -81,7 +81,7 @@ export function useRecorder() {
       }
 
       recognitionRef.current.onerror = (event) => {
-        console.error("[v0] Speech recognition error:", event.error)
+        console.error("plulai Speech recognition error:", event.error)
         setIsRecording(false)
       }
 

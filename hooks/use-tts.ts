@@ -39,7 +39,7 @@ export function useTTS() {
       }
 
       audio.onerror = () => {
-        console.error("[v0] Audio playback error")
+        console.error("plulai Audio playback error")
         setIsSpeaking(false)
         URL.revokeObjectURL(audioUrl)
         audioRef.current = null
@@ -47,7 +47,7 @@ export function useTTS() {
 
       await audio.play()
     } catch (error) {
-      console.error("[v0] TTS error:", error)
+      console.error("plulai TTS error:", error)
       setIsSpeaking(false)
     }
   }, [])

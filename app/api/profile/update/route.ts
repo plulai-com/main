@@ -24,13 +24,13 @@ export async function POST(req: Request) {
     const { data, error } = await supabase.from("profiles").update(updateData).eq("id", user.id).select().single()
 
     if (error) {
-      console.error("[v0] Profile update error:", error)
+      console.error("plulai Profile update error:", error)
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
     return NextResponse.json({ success: true, profile: data })
   } catch (error) {
-    console.error("[v0] Profile update API error:", error)
+    console.error("plulai Profile update API error:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

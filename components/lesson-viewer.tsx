@@ -54,7 +54,7 @@ export function LessonViewer({ lesson, initialProgress, userId }: LessonViewerPr
 
       // Level up handled by global XP bridge if implemented
     } catch (error) {
-      console.error("[v0] Lesson completion failed:", error)
+      console.error("plulai Lesson completion failed:", error)
     } finally {
       setIsSubmitting(false)
     }
@@ -101,7 +101,7 @@ export function LessonViewer({ lesson, initialProgress, userId }: LessonViewerPr
             <CardContent className="p-0 flex-1 flex flex-col">
               <LessonContentRenderer
                 lesson={lesson}
-                onInteraction={(data) => console.log("[v0] Lesson interaction:", data)}
+                onInteraction={(data) => console.log("plulai Lesson interaction:", data)}
               />
             </CardContent>
 

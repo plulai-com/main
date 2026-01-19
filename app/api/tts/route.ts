@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const error = await response.text()
-      console.error("[v0] ElevenLabs API error:", error)
+      console.error("plulai ElevenLabs API error:", error)
       return NextResponse.json({ error: "Failed to generate speech" }, { status: response.status })
     }
 
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       },
     })
   } catch (error) {
-    console.error("[v0] TTS API error:", error)
+    console.error("plulai TTS API error:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
