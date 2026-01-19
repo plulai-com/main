@@ -301,7 +301,8 @@ export function DashboardSidebar({
                       )}>
                         {item.label}
                       </span>
-                      {item.badge && (
+                      {/* REMOVED: Badge check since navigationItems don't have badge property */}
+                      {/* {item.badge && (
                         <Badge className={cn(
                           "ml-2 transition-all duration-300",
                           isActive 
@@ -310,7 +311,7 @@ export function DashboardSidebar({
                         )}>
                           {item.badge}
                         </Badge>
-                      )}
+                      )} */}
                     </div>
                     <p className="text-xs text-slate-500 group-hover:text-slate-600 mt-0.5">
                       {item.desc}
