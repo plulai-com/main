@@ -276,6 +276,7 @@ export function DashboardUI({ initialData, userId }: DashboardUIProps) {
       ])
 
       // Calculate stats
+            // Calculate stats
       const weeklyXP = (weeklyXPResult.data || []).reduce((sum, event) => sum + event.amount, 0)
       const dailyActivity = dailyActivityResult.data?.length || 0
       const totalCompletedLessons = lessonProgressResult.data?.length || 0
@@ -329,14 +330,13 @@ export function DashboardUI({ initialData, userId }: DashboardUIProps) {
         friendsCount,
         certificatesCount,
         ageGroup,
-        age
+        age: age ?? 0  // ← FIXED: Convert null to 0
       })
 
       setCourses(coursesResult.data || [])
       setBadges(badgesResult.data?.map((ub: any) => ub.badges) || [])
       setLeaderboard(leaderboardData)
       setUserRank(userRank)
-
       // Set notification states
       setNotifications(notificationsData)
       setUnreadCount(unreadNotifications)
