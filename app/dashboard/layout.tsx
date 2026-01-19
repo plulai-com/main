@@ -20,7 +20,22 @@ export default async function DashboardLayout({
     redirect("/login")
   }
 
-  const { profile, progress } = await getDashboardData(user.id)
+  // Handle the case where getDashboardData might return null
+  const data = await getDashboardData(user.id)
+  
+  if (!data) {
+    // Return a loading state or redirect if data is null
+    return (
+      <div className="flex min-h-screen bg-background">
+        <div className="flex-1 p-8">
+          <h1 className="text-2xl font-bold mb-4">Loading Dashboard...</h1>
+          <p className="text-muted-foreground">Please wait while we load your data</p>
+        </div>
+      </div>
+    )
+  }
+
+  const { profile, progress } = data
 
   return (
     <div className="flex min-h-screen bg-background">
