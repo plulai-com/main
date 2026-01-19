@@ -5,7 +5,11 @@ import { NextResponse } from "next/server"
 const rateLimitMap = new Map<string, { count: number; lastReset: number }>()
 
 export async function proxy(request: NextRequest) {
-  const ip = request.ip ?? "127.0.0.1"
+  // Get IP from headers instead of request.ip (which doesn't exist in NextRequest)
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 
+             request.headers.get('x-real-ip') || 
+             "127.0.0.1"
+  
   const now = Date.now()
   const windowMs = 60 * 1000 // 1 minute
   const limit = 100 // requests per minute
