@@ -14,10 +14,10 @@ function generateSlug(title: string): string {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ courseId: string }> }
+  { params }: { params: Promise<{ courseId: string }> }  // ← CHANGED: params is a Promise
 ) {
   try {
-    const { courseId } = await params
+    const { courseId } = await params;  // ← CHANGED: Await the params
     const { searchParams } = new URL(request.url)
     const userId = searchParams.get('userId')
     

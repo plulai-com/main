@@ -4,10 +4,10 @@ import { createClient } from '@/lib/server'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ courseId: string }> }
+  { params }: { params: Promise<{ courseId: string }> }  // ← ALREADY FIXED: params is a Promise
 ) {
   try {
-    const { courseId } = await params
+    const { courseId } = await params;  // ← ALREADY FIXED: Await the params
     const { searchParams } = new URL(request.url)
     const userId = searchParams.get('userId')
     
