@@ -420,12 +420,11 @@ export function AchievementsPage({ initialData, userId }: AchievementsPageProps)
       if (loginError) throw loginError
 
       // Update profile with streak info
-      const { data: profileData } = await supabase
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
-        .select('last_login_date, day_streak, longest_streak')
+        .select('day_streak, longest_streak, last_login_date, total_logins')
         .eq('id', userId)
         .single()
-
       if (profileData) {
         const lastLoginDate = profileData.last_login_date ? new Date(profileData.last_login_date) : null
         const today = new Date()
