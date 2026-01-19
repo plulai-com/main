@@ -1,11 +1,11 @@
-import { getSupabaseServer } from "@/lib/supabase/server"
+import { createClient } from "@/lib/server"
 import { type NextRequest, NextResponse } from "next/server"
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = await getSupabaseServer()
+    const supabase = await createClient()
     const {
       data: { user },
     } = await supabase.auth.getUser()
