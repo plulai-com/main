@@ -273,14 +273,15 @@ export default function AiTutorClient({ user }: Props) {
             {msg.content}
 
             {msg.role === "assistant" && voiceEnabled && (
-              <ElevenLabsPlayer
-                text={msg.content}
-                language={language}
-                personality={personality}
-                voiceEnabled={voiceEnabled}
-                onStart={() => setSpeaking(true)}
-                onEnd={() => setSpeaking(false)}
-              />
+            <ElevenLabsPlayer
+              text={msg.content}
+              language={language}
+              personality={personality}
+              voiceEnabled={true}
+              volume={1} // ← ADD THIS LINE
+              onStart={() => {}}
+              onEnd={() => {}}
+            />
             )}
           </div>
         </div>
