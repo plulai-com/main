@@ -552,7 +552,7 @@ export default function LessonClient({
                     
                     <CardContent>
                       <ActivityRenderer
-                        activity={currentActivity}
+                        activity={currentActivity as any}
                         userId={user.id}
                         onComplete={() => updateActivityProgress(currentActivity.id, 'completed')}
                         isCompleted={isCurrentActivityCompleted}
