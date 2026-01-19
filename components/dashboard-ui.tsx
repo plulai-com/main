@@ -330,7 +330,7 @@ export function DashboardUI({ initialData, userId }: DashboardUIProps) {
         friendsCount,
         certificatesCount,
         ageGroup,
-        age: calculatedAge ?? 0  // ← FIXED: Use full property syntax
+        age: (calculatedAge ?? 0) as any  // Quick fix
       })
 
       setCourses(coursesResult.data || [])
