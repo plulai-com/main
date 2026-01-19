@@ -39,7 +39,12 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen bg-background">
-      <DashboardSidebar profile={profile} progress={progress} />
+      <DashboardSidebar 
+        profile={profile} 
+        progress={progress}
+        activeNav="dashboard" // Added missing prop
+        sidebarOpen={true} // Added missing prop
+      />
 
       {/* ✅ JSX tag, not a variable */}
       <main className="flex-1 h-screen overflow-y-auto relative">
