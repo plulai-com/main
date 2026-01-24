@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 import { ChevronDown, HelpCircle, MessageSquare, CreditCard, UserCheck, Code, Award } from "lucide-react"
-
+import Link from "next/link" 
 interface FAQItem {
   question: string
   answer: string
@@ -146,10 +146,13 @@ export function FAQ() {
               Chat with our team or ask Bloo directly! We're here to help 24/7.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-[#1CB0F6] px-8 py-3 rounded-full font-black uppercase italic hover:bg-slate-100 transition-colors">
-                Contact Support
-              </button>
-             
+              
+             <Link 
+              href="/contact"
+              className="bg-white text-[#1CB0F6] px-8 py-3 rounded-full font-black uppercase italic hover:bg-slate-100 transition-colors inline-block text-center"
+            >
+              Contact Support
+            </Link>
             </div>
           </div>
         </div>
