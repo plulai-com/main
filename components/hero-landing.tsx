@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { ArrowRight, Play, Star, Rocket, TrendingUp, Lightbulb, DollarSign, Code, Users, Sparkles, Zap, Target, Brain } from "lucide-react"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
+import Link from "next/link"
 
 export function HeroLanding() {
   const [showDemo, setShowDemo] = useState(false)
@@ -72,21 +73,25 @@ export function HeroLanding() {
             </p>
 
             <div className="flex flex-wrap justify-center lg:justify-start gap-3">
-              <Button
-                size="lg"
-                className="h-14 px-8 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-black uppercase tracking-widest text-lg rounded-[1.75rem] shadow-lg shadow-blue-200 group"
-              >
-                <Rocket className="mr-2 w-5 h-5" />
-                Start Building <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => setShowDemo(true)}
-                className="h-14 px-8 border-2 border-slate-200 hover:bg-slate-50 text-slate-900 font-black uppercase tracking-widest text-lg rounded-[1.75rem] bg-white"
-              >
-                <Play className="mr-2 w-5 h-5 fill-current" /> Watch Demo
-              </Button>
+              <Link href="/signup">
+                <Button
+                  size="lg"
+                  className="h-14 px-8 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-black uppercase tracking-widest text-lg rounded-[1.75rem] shadow-lg shadow-blue-200 group"
+                >
+                  <Rocket className="mr-2 w-5 h-5" />
+                  Start Building <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              
+              <Link href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank" rel="noopener noreferrer">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="h-14 px-8 border-2 border-slate-200 hover:bg-slate-50 text-slate-900 font-black uppercase tracking-widest text-lg rounded-[1.75rem] bg-white"
+                >
+                  <Play className="mr-2 w-5 h-5 fill-current" /> Watch Demo
+                </Button>
+              </Link>
             </div>
 
             <div className="flex items-center justify-center lg:justify-start gap-4 text-xs font-black uppercase tracking-widest text-slate-400">
