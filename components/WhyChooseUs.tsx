@@ -72,7 +72,7 @@ export function WhyChooseUs() {
         <div className="mt-20 bg-white rounded-3xl border-4 border-slate-100 p-8 max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="space-y-2">
-              <div className="text-4xl font-black text-[#1CB0F6]">1K+</div>
+              <div className="text-4xl font-black text-[#1CB0F6]">500+</div>
               <div className="text-slate-600 font-bold">Active Learners</div>
             </div>
             <div className="space-y-2">
