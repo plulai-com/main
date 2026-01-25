@@ -59,12 +59,12 @@ const AIMentor = ({ className = "" }: AIMentorProps) => {
                 <p className="font-bold text-slate-700">24/7 Coding Support & Motivation</p>
               </div>
             </div>
-            <Button
+            {/* <Button
               size="lg"
               className="bg-[#1CB0F6] hover:bg-[#14D4F4] text-white font-black uppercase tracking-widest italic h-14 px-8"
             >
               Get Started With Bloo
-            </Button>
+            </Button> */}
           </div>
 
           <div className="flex-1 flex justify-center lg:justify-end relative">

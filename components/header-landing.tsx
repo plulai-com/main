@@ -1,8 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Languages, Menu, X, ChevronDown } from "lucide-react"
+import { usePathname } from "next/navigation"
+import { Languages, Menu, X, ChevronDown, Home } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import Image from "next/image"
@@ -10,9 +11,20 @@ import Image from "next/image"
 export function HeaderLanding() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
+  const isLandingPage = pathname === "/"
 
-  // Smooth scroll function
+  // Check if we're on a sub-page
+  const isSubPage = !isLandingPage
+
+  // Smooth scroll function for landing page
   const handleSmoothScroll = (sectionId: string) => {
+    if (!isLandingPage) {
+      // If not on landing page, navigate to landing page first
+      window.location.href = `/#${sectionId}`
+      return
+    }
+
     const element = document.getElementById(sectionId)
     if (element) {
       // Close mobile menu if open
@@ -33,16 +45,28 @@ export function HeaderLanding() {
   // Nav items with their corresponding section IDs
   const navItems = [
     { label: "Missions", id: "missions" },
-    { label: "faq", id: "faq" },
+    { label: "FAQ", id: "faq" },
     { label: "AI Mentor", id: "bloo" },
     { label: "Pricing", id: "pricing" }
   ]
 
   // Listen for scroll to add background
-  if (typeof window !== 'undefined') {
-    window.addEventListener('scroll', () => {
+  useEffect(() => {
+    const handleScroll = () => {
       setScrolled(window.scrollY > 20)
-    })
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Handle logo click
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (isLandingPage) {
+      e.preventDefault()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+    // If not on landing page, Link component will handle navigation
   }
 
   return (
@@ -52,14 +76,11 @@ export function HeaderLanding() {
         : 'bg-[#FDF6E3]/80 backdrop-blur-xl py-0'
     }`}>
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        {/* Logo with smooth scroll to top */}
+        {/* Logo with smooth scroll to top on landing page, or home navigation */}
         <Link 
           href="/" 
           className="flex items-center gap-2 group"
-          onClick={(e) => {
-            e.preventDefault()
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-          }}
+          onClick={handleLogoClick}
         >
           <div className="items-center justify-center overflow-hidden transition-transform group-hover:scale-105 duration-300">
             <Image 
@@ -73,17 +94,37 @@ export function HeaderLanding() {
           </div>
         </Link>
 
-        {/* Desktop Nav with smooth scroll */}
+        {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
+          {/* Home button for sub-pages */}
+          {isSubPage && (
+            <Link 
+              href="/"
+              className="flex items-center gap-2 text-sm font-black uppercase tracking-widest text-slate-600 hover:text-[#1CB0F6] transition-all duration-300 relative group"
+            >
+              <Home className="w-4 h-4" />
+              Home
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1CB0F6] group-hover:w-full transition-all duration-300"></span>
+            </Link>
+          )}
+
+          {/* Landing page navigation items */}
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => handleSmoothScroll(item.id)}
-              className="text-sm font-black uppercase tracking-widest text-slate-600 hover:text-[#1CB0F6] transition-all duration-300 relative group"
+              className={`text-sm font-black uppercase tracking-widest transition-all duration-300 relative group ${
+                isSubPage 
+                  ? 'text-slate-400 cursor-not-allowed' 
+                  : 'text-slate-600 hover:text-[#1CB0F6]'
+              }`}
+              disabled={isSubPage}
             >
               {item.label}
-              {/* Animated underline */}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1CB0F6] group-hover:w-full transition-all duration-300"></span>
+              {/* Animated underline - only on landing page */}
+              {!isSubPage && (
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1CB0F6] group-hover:w-full transition-all duration-300"></span>
+              )}
             </button>
           ))}
           
@@ -96,13 +137,13 @@ export function HeaderLanding() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center" className="mt-2">
               <DropdownMenuItem asChild>
-                <Link href="/safety" className="cursor-pointer">Safety</Link>
+                <Link href="/safety" className="cursor-pointer w-full">Safety</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/support" className="cursor-pointer">Support</Link>
+                <Link href="/support" className="cursor-pointer w-full">Support</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href="/contact" className="cursor-pointer">Contact</Link>
+                <Link href="/contact" className="cursor-pointer w-full">Contact</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -116,15 +157,15 @@ export function HeaderLanding() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="mt-2">
-              <DropdownMenuItem className="flex items-center gap-2">
+              <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
                 <span className="text-sm">🇺🇸</span>
                 English
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-2">
+              <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
                 <span className="text-sm">🇸🇦</span>
                 العربية
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-2">
+              <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
                 <span className="text-sm">🇫🇷</span>
                 Français
               </DropdownMenuItem>
@@ -160,11 +201,22 @@ export function HeaderLanding() {
         </div>
       </div>
 
-      {/* Mobile Nav with smooth scroll */}
+      {/* Mobile Nav */}
       {isOpen && (
         <div className="md:hidden absolute top-20 left-0 w-full bg-white/95 backdrop-blur-lg border-b border-slate-200 animate-in slide-in-from-top-4 duration-300">
           <div className="container mx-auto px-4 py-4 space-y-2">
-            {navItems.map((item) => (
+            {/* Home button for mobile */}
+            <Link 
+              href="/"
+              className="flex items-center gap-2 text-lg font-black uppercase tracking-widest text-slate-900 hover:text-[#1CB0F6] p-3 hover:bg-slate-50 rounded-lg transition-all duration-300"
+              onClick={() => setIsOpen(false)}
+            >
+              <Home className="w-4 h-4" />
+              Home
+            </Link>
+
+            {/* Landing page navigation items - only show on landing page */}
+            {isLandingPage && navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleSmoothScroll(item.id)}
@@ -175,6 +227,7 @@ export function HeaderLanding() {
               </button>
             ))}
             
+            {/* Additional pages */}
             <div className="border-t border-slate-200 pt-4 mt-2 space-y-2">
               <Link 
                 href="/safety" 
