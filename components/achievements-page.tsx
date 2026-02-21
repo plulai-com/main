@@ -420,10 +420,10 @@ export function AchievementsPage({ initialData, userId }: AchievementsPageProps)
 
       // Update profile with streak info
       const { data: profileData } = await supabase
-        .from('profiles')
-        .select('last_login_date, day_streak, longest_streak')
-        .eq('id', userId)
-        .single()
+      .from('profiles')
+      .select('last_login_date, day_streak, longest_streak, total_logins')
+      .eq('id', userId)
+      .single()
 
       if (profileData) {
         const lastLoginDate = profileData.last_login_date ? new Date(profileData.last_login_date) : null
