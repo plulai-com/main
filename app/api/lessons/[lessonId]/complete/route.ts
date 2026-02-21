@@ -1,13 +1,14 @@
-// app/api/lessons/[lessonId]/complete/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/server'
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { lessonId: string } }
+  { params }: { params: Promise<{ lessonId: string }> }
 ) {
   try {
-    const lessonId = params.lessonId
+    // Await the params to get the lessonId
+    const { lessonId } = await params
+    
     const body = await request.json()
     const { userId } = body
 
