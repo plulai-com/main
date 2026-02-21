@@ -1,4 +1,5 @@
 "use client"
+import React from "react"
 
 import { useState } from "react"
 import { ChevronDown, HelpCircle, MessageSquare, CreditCard, UserCheck, Code, Award } from "lucide-react"
@@ -7,8 +8,9 @@ interface FAQItem {
   question: string
   answer: string
   category: string
-  icon: JSX.Element
+  icon: React.ReactNode
 }
+
 
 export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
