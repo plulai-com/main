@@ -83,59 +83,64 @@ export function DashboardSidebar({
     fetchUserData()
   }, [profile?.id])
 
-  const navigationItems = [
-    { 
-      id: "dashboard", 
-      label: "Kingdom Hall", 
-      icon: Castle,
-      color: "text-purple-600",
-      bgColor: "bg-purple-100",
-      desc: "Your adventure hub"
-    },
-    { 
-      id: "learn", 
-      label: "Learn & Master", 
-      icon: BookOpen, 
-      // badge: unlockedLessons,
-      color: "text-blue-600",
-      bgColor: "bg-blue-100",
-      desc: `Innovate your skills`
-    },
-    { 
-      id: "achievements", 
-      label: "Achievements ", 
-      icon: SwordIcon, 
-      // badge: 5,
-      color: "text-amber-600",
-      bgColor: "bg-amber-100",
-      desc: "achieve your goals"
-    },
-    { 
-      id: "leaderboards", 
-      label: "Hero Ranking", 
-      icon: Crown,
-      color: "text-yellow-600",
-      bgColor: "bg-yellow-100",
-      desc: "Climb the ranks"
-    },
-    { 
-      id: "ai-tutor", 
-      label: "Wizard Bloo", 
-      icon: Bot,
-      color: "text-cyan-600",
-      bgColor: "bg-cyan-100",
-      desc: "Magical assistant"
-    },
-    { 
-      id: "profile", 
-      label: "Hero Profile", 
-      icon: Shield,
-      color: "text-emerald-600",
-      bgColor: "bg-emerald-100",
-      desc: "Your journey"
-    },
-  ]
-
+  const navigationItems: {
+  id: string
+  label: string
+  icon: React.ForwardRefExoticComponent<any>
+  color: string
+  bgColor: string
+  desc: string
+  badge?: number
+}[] = [
+  { 
+    id: "dashboard", 
+    label: "Kingdom Hall", 
+    icon: Castle,
+    color: "text-purple-600",
+    bgColor: "bg-purple-100",
+    desc: "Your adventure hub"
+  },
+  { 
+    id: "learn", 
+    label: "Learn & Master", 
+    icon: BookOpen, 
+    color: "text-blue-600",
+    bgColor: "bg-blue-100",
+    desc: `Innovate your skills`
+  },
+  { 
+    id: "achievements", 
+    label: "Achievements ", 
+    icon: SwordIcon, 
+    color: "text-amber-600",
+    bgColor: "bg-amber-100",
+    desc: "achieve your goals"
+  },
+  { 
+    id: "leaderboards", 
+    label: "Hero Ranking", 
+    icon: Crown,
+    color: "text-yellow-600",
+    bgColor: "bg-yellow-100",
+    desc: "Climb the ranks"
+  },
+  { 
+    id: "ai-tutor", 
+    label: "Wizard Bloo", 
+    icon: Bot,
+    color: "text-cyan-600",
+    bgColor: "bg-cyan-100",
+    desc: "Magical assistant"
+  },
+  { 
+    id: "profile", 
+    label: "Hero Profile", 
+    icon: Shield,
+    color: "text-emerald-600",
+    bgColor: "bg-emerald-100",
+    desc: "Your journey"
+  },
+]
   const dailyXPPercentage = Math.min((dailyXP.current / dailyXP.goal) * 100, 100)
   const levelProgress = progress?.xp ? Math.min((progress.xp % 1000) / 10, 100) : 0
 
