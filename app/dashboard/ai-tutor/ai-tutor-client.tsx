@@ -278,6 +278,7 @@ export default function AiTutorClient({ user }: Props) {
                 language={language}
                 personality={personality}
                 voiceEnabled={voiceEnabled}
+                volume={0.8} // Fixed: Added missing volume prop
                 onStart={() => setSpeaking(true)}
                 onEnd={() => setSpeaking(false)}
               />
