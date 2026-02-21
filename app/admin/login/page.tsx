@@ -1,18 +1,17 @@
 // app/admin/login/page.tsx 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createBrowserClient } from '@supabase/ssr';
 import { Eye, EyeOff, Lock, Mail, AlertCircle, Loader2 } from 'lucide-react';
 
-// Create browser client specifically for admin
 const supabaseAdmin = createBrowserClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-export default function AdminLoginPage() {
+function AdminLoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectedFrom = searchParams.get('redirectedFrom');
@@ -24,14 +23,12 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('');
   const [initializing, setInitializing] = useState(true);
 
-  // Check if user is already logged in
   useEffect(() => {
     const checkSession = async () => {
       try {
         const { data: { session } } = await supabaseAdmin.auth.getSession();
         
         if (session?.user) {
-          // Check if user is admin
           const { data: profile } = await supabaseAdmin
             .from('profiles')
             .select('role')
@@ -39,11 +36,9 @@ export default function AdminLoginPage() {
             .single();
 
           if (profile?.role === 'admin') {
-            // Redirect to admin dashboard or original destination
             const redirectTo = redirectedFrom || '/admin';
             window.location.href = redirectTo;
           } else {
-            // Not an admin, sign them out
             await supabaseAdmin.auth.signOut();
           }
         }
@@ -62,7 +57,6 @@ export default function AdminLoginPage() {
     setLoading(true);
     setError('');
 
-    // Validate inputs
     if (!email.trim() || !password) {
       setError('Please enter both email and password');
       setLoading(false);
@@ -70,7 +64,6 @@ export default function AdminLoginPage() {
     }
 
     try {
-      // 1. Sign in with Supabase
       const { error: authError } = await supabaseAdmin.auth.signInWithPassword({
         email: email.trim(),
         password,
@@ -85,7 +78,6 @@ export default function AdminLoginPage() {
         throw authError;
       }
 
-      // 2. Get fresh session
       await new Promise(resolve => setTimeout(resolve, 300));
       const { data: { session }, error: sessionError } = await supabaseAdmin.auth.getSession();
       
@@ -93,7 +85,6 @@ export default function AdminLoginPage() {
         throw new Error('Failed to create session');
       }
 
-      // 3. Check admin role
       const { data: profile, error: profileError } = await supabaseAdmin
         .from('profiles')
         .select('role')
@@ -110,18 +101,12 @@ export default function AdminLoginPage() {
         throw new Error('Admin privileges required. Please contact support.');
       }
 
-      // 4. SUCCESS - Redirect with hard navigation
-      // This ensures middleware picks up the new cookies
       const redirectTo = redirectedFrom || '/admin';
-      console.log('Login successful, redirecting to:', redirectTo);
-      
-      // Force hard redirect - this is CRITICAL
       window.location.href = redirectTo;
 
     } catch (error: any) {
       console.error('Login error:', error);
       
-      // User-friendly error messages
       let errorMessage = error.message || 'Login failed';
       
       if (errorMessage.includes('Failed to fetch')) {
@@ -132,7 +117,6 @@ export default function AdminLoginPage() {
       
       setError(errorMessage);
       
-      // Clean up failed login attempt
       try {
         await supabaseAdmin.auth.signOut();
       } catch (signOutError) {
@@ -144,7 +128,6 @@ export default function AdminLoginPage() {
   };
 
   const handleDemoLogin = async () => {
-    // Optional: Add demo login for testing
     setEmail('admin@example.com');
     setPassword('demo-password-123');
   };
@@ -254,7 +237,6 @@ export default function AdminLoginPage() {
               </div>
             </div>
 
-            {/* Demo login button (optional - remove in production) */}
             {process.env.NEXT_PUBLIC_APP_ENV === 'development' && (
               <div className="text-center">
                 <button
@@ -333,5 +315,20 @@ export default function AdminLoginPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-600 mx-auto" />
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <AdminLoginForm />
+    </Suspense>
   );
 }
