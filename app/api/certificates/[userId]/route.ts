@@ -4,9 +4,12 @@ import { createClient } from '@/lib/server'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
+    // Await the params to get the userId
+    const { userId } = await params
+    
     const supabase = await createClient()
     
     // Get certificates for user
@@ -20,7 +23,7 @@ export async function GET(
           order_index
         )
       `)
-      .eq('user_id', params.userId)
+      .eq('user_id', userId)
       .order('issued_at', { ascending: false })
 
     if (error) {
@@ -36,4 +39,4 @@ export async function GET(
     console.error('Error fetching certificates:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
-}   
+}
