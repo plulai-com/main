@@ -64,7 +64,7 @@ export function useRecorder() {
       recognitionRef.current.interimResults = true
       recognitionRef.current.lang = "en-US"
 
-      recognitionRef.current.onresult = (event) => {
+      recognitionRef.current.onresult = (event: SpeechRecognitionEvent) => {
         let interimTranscript = ""
         let finalTranscript = ""
 
@@ -80,7 +80,7 @@ export function useRecorder() {
         setTranscript((prev) => prev + finalTranscript || interimTranscript)
       }
 
-      recognitionRef.current.onerror = (event) => {
+      recognitionRef.current.onerror = (event: SpeechRecognitionErrorEvent) => {
         console.error("[v0] Speech recognition error:", event.error)
         setIsRecording(false)
       }
