@@ -63,7 +63,27 @@ interface Badge {
   isEarned: boolean
   earned_at?: string
 }
-
+interface Stats {
+  earnedBadgesCount: number
+  totalBadges: number
+  completionPercentage: number
+  currentLevel: number
+  currentXP: number
+  currentStreak: number
+  longestStreak: number
+  completedLessons: number
+  completedCourses: number
+  totalLogins: number
+  nextXPMilestone: { badge: string; xp: number }
+  progressToNext: number
+  rarityCounts: {
+    common: number
+    uncommon: number
+    rare: number
+    epic: number
+    legendary: number
+  }
+}
 interface StreakData {
   currentStreak: number
   longestStreak: number
@@ -86,27 +106,28 @@ export function AchievementsPage({ initialData, userId }: AchievementsPageProps)
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null)
   const [showFilters, setShowFilters] = useState(false)
   const [activeTab, setActiveTab] = useState<'badges' | 'progress' | 'stats'>('badges')
-  const [stats, setStats] = useState(initialData?.stats || {
-    earnedBadgesCount: 0,
-    totalBadges: 0,
-    completionPercentage: 0,
-    currentLevel: 1,
-    currentXP: 0,
-    currentStreak: 0,
-    longestStreak: 0,
-    completedLessons: 0,
-    completedCourses: 0,
-    totalLogins: 0,
-    nextXPMilestone: { badge: 'Next Milestone', xp: 500 },
-    progressToNext: 0,
-    rarityCounts: {
-      common: 0,
-      uncommon: 0,
-      rare: 0,
-      epic: 0,
-      legendary: 0
-    }
-  })
+  const [stats, setStats] = useState<Stats>(initialData?.stats || {
+  earnedBadgesCount: 0,
+  totalBadges: 0,
+  completionPercentage: 0,
+  currentLevel: 1,
+  currentXP: 0,
+  currentStreak: 0,
+  longestStreak: 0,
+  completedLessons: 0,
+  completedCourses: 0,
+  totalLogins: 0,
+  nextXPMilestone: { badge: 'Next Milestone', xp: 500 },
+  progressToNext: 0,
+  rarityCounts: {
+    common: 0,
+    uncommon: 0,
+    rare: 0,
+    epic: 0,
+    legendary: 0
+  }
+})
+
   const [allBadges, setAllBadges] = useState<Badge[]>(initialData?.allBadges || [])
   const [earnedBadges, setEarnedBadges] = useState<Badge[]>(initialData?.earnedBadges || [])
   const [xpHistory, setXpHistory] = useState<Array<{date: string, xp: number}>>(initialData?.xpHistory || [])
