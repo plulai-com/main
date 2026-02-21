@@ -20,13 +20,18 @@ export default async function DashboardLayout({
     redirect("/login")
   }
 
-  const { profile, progress } = await getDashboardData(user.id)
+  const dashboardData = await getDashboardData(user.id)
+
+  if (!dashboardData) {
+    redirect("/login")
+  }
+
+  const { profile, progress } = dashboardData
 
   return (
     <div className="flex min-h-screen bg-background">
       <DashboardSidebar profile={profile} progress={progress} />
 
-      {/* ✅ JSX tag, not a variable */}
       <main className="flex-1 h-screen overflow-y-auto relative">
         <div className="p-4 md:p-8">{children}</div>
       </main>
