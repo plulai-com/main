@@ -1,14 +1,15 @@
-// app/api/courses/[courseId]/route.ts - FIXED VERSION
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/server'
 import { cookies } from 'next/headers'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { courseId: string } }
+  { params }: { params: Promise<{ courseId: string }> }
 ) {
   try {
-    const courseId = params.courseId
+    // Await the params to get the courseId
+    const { courseId } = await params
+    
     const { searchParams } = new URL(request.url)
     const userId = searchParams.get('userId')
     
