@@ -45,11 +45,11 @@ export default async function AiTutorPage() {
     <AiTutorClient
       user={{
         id: user.id,
-        email: user.email || '',
         username: profile?.username || 'Student',
         language: profile?.language_preference || 'en',
         xp: progress?.xp || 0,
         level: progress?.level || 1,
+        age_group: undefined, // Optional: you can fetch this from profile if needed
         avatar: profile?.avatar_custom_url || null
       }}
       initialConversations={conversations || []}
