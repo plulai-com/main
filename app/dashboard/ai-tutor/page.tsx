@@ -19,20 +19,12 @@ export default async function AiTutorPage() {
     )
   }
 
-  // Fetch user's language preference and avatar
+  // Fetch user's language preference
   const { data: profile } = await supabase
     .from('profiles')
-    .select('language_preference, avatar_id, avatar_custom_url, username')
+    .select('language_preference, username, age_group')
     .eq('id', user.id)
     .single()
-
-  // Fetch conversation history
-  const { data: conversations } = await supabase
-    .from('ai_tutor_conversations')
-    .select('*')
-    .eq('user_id', user.id)
-    .order('timestamp', { ascending: false })
-    .limit(20)
 
   // Fetch user's progress for context
   const { data: progress } = await supabase
@@ -40,6 +32,8 @@ export default async function AiTutorPage() {
     .select('xp, level')
     .eq('user_id', user.id)
     .single()
+
+  // Note: conversations are managed client-side, so we don't need to fetch them here
 
   return (
     <AiTutorClient
@@ -49,10 +43,8 @@ export default async function AiTutorPage() {
         language: profile?.language_preference || 'en',
         xp: progress?.xp || 0,
         level: progress?.level || 1,
-        age_group: undefined, // Optional: you can fetch this from profile if needed
-        avatar: profile?.avatar_custom_url || null
+        age_group: profile?.age_group,
       }}
-      initialConversations={conversations || []}
     />
   )
 }
