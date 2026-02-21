@@ -46,7 +46,7 @@ interface Activity {
   lesson_id: string
   title: string
   content: string
-  type: 'video' | 'quiz' | 'submission' | 'text' | 'link' | 'picture' | 'activity' | 'case_study'
+  type: 'video' | 'quiz' | 'submit' | 'reading' | 'link' | 'picture' | 'coding' | 'interactive' | 'exercise' | 'case_study'
   order_index: number
   duration?: number
   required: boolean
@@ -296,33 +296,37 @@ export default function LessonClient({
     }
   }
 
-  const getActivityIcon = (type: Activity['type']) => {
-    switch (type) {
-      case 'video': return Video
-      case 'quiz': return HelpCircle
-      case 'submission': return Upload
-      case 'text': return FileText
-      case 'link': return ExternalLink
-      case 'picture': return ImageIcon
-      case 'case_study': return BookOpen
-      case 'activity': return Puzzle
-      default: return FileText
-    }
+const getActivityIcon = (type: Activity['type']) => {
+  switch (type) {
+    case 'video': return Video
+    case 'quiz': return HelpCircle
+    case 'submit': return Upload
+    case 'reading': return FileText
+    case 'link': return ExternalLink
+    case 'picture': return ImageIcon
+    case 'case_study': return BookOpen
+    case 'coding':
+    case 'interactive':
+    case 'exercise': return Puzzle
+    default: return FileText
   }
+}
 
   const getActivityColor = (type: Activity['type']) => {
-    switch (type) {
-      case 'video': return 'bg-[#2B70C9]' // Blue
-      case 'quiz': return 'bg-[#1CB0F6]' // Light Blue
-      case 'submission': return 'bg-[#58CC02]' // Green (success color)
-      case 'text': return 'bg-[#FAA918]' // Orange
-      case 'link': return 'bg-[#14D4F4]' // Cyan
-      case 'picture': return 'bg-[#2B70C9]' // Blue
-      case 'case_study': return 'bg-[#1CB0F6]' // Light Blue
-      case 'activity': return 'bg-[#FAA918]' // Orange
-      default: return 'bg-[#6F6F6F]' // Gray
-    }
+  switch (type) {
+    case 'video': return 'bg-[#2B70C9]'
+    case 'quiz': return 'bg-[#1CB0F6]'
+    case 'submit': return 'bg-[#58CC02]'
+    case 'reading': return 'bg-[#FAA918]'
+    case 'link': return 'bg-[#14D4F4]'
+    case 'picture': return 'bg-[#2B70C9]'
+    case 'case_study': return 'bg-[#1CB0F6]'
+    case 'coding':
+    case 'interactive':
+    case 'exercise': return 'bg-[#FAA918]'
+    default: return 'bg-[#6F6F6F]'
   }
+}
 
   // Chatbot functionality
   const handleSendMessage = async () => {
