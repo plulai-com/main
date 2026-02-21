@@ -28,9 +28,19 @@ export default async function DashboardLayout({
 
   const { profile, progress } = dashboardData
 
+  // Determine active nav based on current path or set a default
+  // Since this is a server component, we can't use usePathname() here
+  // You might need to pass this from the client component or use a default
+  const activeNav = "dashboard" // or get this from the URL in a different way
+
   return (
     <div className="flex min-h-screen bg-background">
-      <DashboardSidebar profile={profile} progress={progress} />
+      <DashboardSidebar 
+        profile={profile} 
+        progress={progress}
+        activeNav={activeNav}
+        sidebarOpen={true} // Default to open
+      />
 
       <main className="flex-1 h-screen overflow-y-auto relative">
         <div className="p-4 md:p-8">{children}</div>
