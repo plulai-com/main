@@ -137,20 +137,33 @@ export function DashboardUI({ initialData, userId }: DashboardUIProps) {
   
   // State for all data
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(initialData || null)
-  const [stats, setStats] = useState({
-    weeklyXP: initialData?.weeklyXP || 0,
-    dailyActivity: initialData?.dailyActivity || 0,
-    totalCompletedLessons: 0,
-    completedCourses: 0,
-    badgesCount: 0,
-    streak: 0,
-    currentLevel: 1,
-    userXP: 0,
-    friendsCount: 0,
-    certificatesCount: 0,
-    ageGroup: 'all',
-    age: null
-  })
+const [stats, setStats] = useState<{
+  weeklyXP: number
+  dailyActivity: number
+  totalCompletedLessons: number
+  completedCourses: number
+  badgesCount: number
+  streak: number
+  currentLevel: number
+  userXP: number
+  friendsCount: number
+  certificatesCount: number
+  ageGroup: string
+  age: number | null
+}>({
+  weeklyXP: initialData?.weeklyXP || 0,
+  dailyActivity: initialData?.dailyActivity || 0,
+  totalCompletedLessons: 0,
+  completedCourses: 0,
+  badgesCount: 0,
+  streak: 0,
+  currentLevel: 1,
+  userXP: 0,
+  friendsCount: 0,
+  certificatesCount: 0,
+  ageGroup: 'all',
+  age: null
+})
   const [courses, setCourses] = useState<any[]>(initialData?.courses || [])
   const [badges, setBadges] = useState<any[]>(initialData?.badges || [])
   const [leaderboard, setLeaderboard] = useState<any[]>(initialData?.leaderboard || [])
